@@ -1,10 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import HomeHeader from './components/Header';
 
 const App = () => {
 
   return (
-    <h1>Hello</h1>
+    <div className='App'>
+        <HomeHeader name={"Pokemon"} author={'@pokemonGroup'}/>
+    </div>
   );
 }
 
