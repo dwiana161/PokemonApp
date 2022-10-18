@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Card from "../Card";
+import CardList from "../Card";
 import HomeHeader from "../Header";
 import { Button, Grid } from "semantic-ui-react";
 
@@ -53,7 +53,7 @@ const Home = () => {
             <HomeHeader/>
             <Grid.Row>
                 <Grid.Column>
-                    <Card pokemon={pokeData} loading={loading}></Card>
+                    <CardList pokemon={pokeData} loading={loading}></CardList>
                 </Grid.Column>
             </Grid.Row>
 

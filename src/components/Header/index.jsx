@@ -8,7 +8,7 @@ import {
 const HomeHeader = () => {
     return (
         <Segment basic inverted>
-            <Header as='h1' className="ui center aligned">This is a header for Pokedox!</Header>
+            <Header as='h1' className="ui center aligned">POKEMON!</Header>
             <Image src={'anime.png'} size={'small'} centered/>
             {/* <Header as='h3'>Author: {author}</Header> */}
         </Segment>

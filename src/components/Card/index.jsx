@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Modal, Button, Header, Image, Grid, Segment } from "semantic-ui-react";
+import { Modal, Button, Header, Image, Grid, Card } from "semantic-ui-react";
 import { Icon } from 'semantic-ui-react';
 import { useDispatch, useSelector } from "react-redux";
 import  {bookmark, getBookmarkItems, unBookmarkItem } from "../../actions/bookmark";
@@ -8,12 +8,14 @@ import Bookmark from "../Bookmark";
 import { useEffect } from "react";
 
 
-const Card = ({pokemon, loading}) => {
+const CardList = ({pokemon, loading}) => {
     const [showModal, setShowModal] = useState(false);
     const [pokeName, setPokeName] = useState('');
     const [pokeHeight, setPokeHeight] = useState('');
     const [pokeWeight, setPokeWeight] = useState('');
     const [pokeImg, setPokeImg] = useState();
+    const [pokeType, setPokeType] = useState('');
+    const [pokeMove, setPokeMove] = useState('');
     const [searchPoke, setSearchPoke] = useState('');
     const handleShow = () => setShowModal(true);
    
@@ -44,6 +46,8 @@ const Card = ({pokemon, loading}) => {
         setPokeHeight(res.height);
         setPokeWeight(res.weight);
         setPokeImg(res.sprites.front_default);
+        setPokeType(res.types[0].type.name);
+        setPokeMove(res.moves[0].move.name);
         handleShow();
 
     }
@@ -64,13 +68,15 @@ const Card = ({pokemon, loading}) => {
         >
             <Modal.Header>Pokemon</Modal.Header>
       <Modal.Content image>
-        <Image size='medium' src={pokeImg} wrapped />
+        <Image size='medium' src={pokeImg} />
         <Modal.Description>
           <Header>{pokeName}</Header>
           <p>
            Height : {pokeHeight}
           </p>
           <p>Weight : {pokeWeight}</p>
+          <p>Type : {pokeType}</p>
+          <p>Move : {pokeMove}</p>
         </Modal.Description>
       </Modal.Content>
       <Modal.Actions>
@@ -85,24 +91,29 @@ const Card = ({pokemon, loading}) => {
             <input type="text" 
                     placeholder="Search..." 
                     onChange={event => {setSearchPoke(event.target.value)}}
+                    style={{width: '100%'}}
                 />
             <i class="circular search link icon"></i>
         </div>
 
+        <Grid centered columns={3} style={{marginLeft:'10%'}}>
+            <Grid.Row>
+                <Grid.Column>
             {
             bookmarks.length !== 0 &&(
             <>
             <Header as='h1'>Your Favorite Pokemons</Header>
-                <Grid>
                     <Bookmark
                         BookmarkType={bookmarks}
                     />
-                </Grid>
             </>
                 )
             }
+            </Grid.Column>
+            </Grid.Row>
+        </Grid>
 
-        <Grid columns={3} style={{padding:'20px'}}>
+        <Grid centered columns={3} style={{marginLeft:'10%'}}>
         <Grid.Row>
             {
                 loading ? <Header as='h1'>Loading...</Header> :
@@ -117,22 +128,37 @@ const Card = ({pokemon, loading}) => {
                     return (
                         
                         <Grid.Column key={item.id}>
-                              {isBookmark(item) ? (
+                            <Card style={{width:'50%', marginBottom:'20px', cursor:'pointer'}}>
+                            <Image 
+                                src={item.sprites.front_default} 
+                                size={'small'} 
+                                centered  
+                                onClick={()=> openPokeInfo(item)}
+                                style={{cursor:'pointer'}}/>
+                            <Card.Content className="ui center aligned" style={{backgroundColor:' #ada397'}}>
+                                <Card.Header>{item.name}</Card.Header>
+                                <Card.Description>
+                                Type: {item.types[0].type.name}
+                                </Card.Description>
+                                <Card.Description>
+                                Move: {item.moves[0].move.name}
+                                </Card.Description>
+                            </Card.Content>
+                                <Card.Content extra>
+                                {isBookmark(item) ? (
                                 <Icon 
                                     name="like" 
                                     color='red'
                                     onClick={() => unBookmark(item)}
                                 />
-                            ) :
-                                <Icon 
-                                    name="like" 
-                                    onClick={() => bookmarkItem(item)}
-                                />
-                            }
-                            <Segment style={{width:'50%', marginBottom:'20px'}} onClick={()=> openPokeInfo(item)}>
-                            <Image src={item.sprites.front_default} size={'small'} centered/>
-                            <Header as='h5' className="ui center aligned">{item.name}</Header>
-                            </Segment>    
+                                ) :
+                                    <Icon 
+                                        name="like" 
+                                        onClick={() => bookmarkItem(item)}
+                                    />
+                                }
+                                </Card.Content>
+                            </Card>    
                         </Grid.Column>
                     )
                 })
@@ -144,4 +170,4 @@ const Card = ({pokemon, loading}) => {
     )
 }
 
-export default Card;
+export default CardList;
