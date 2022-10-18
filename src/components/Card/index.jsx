@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Modal, Button, Header, Image, Grid } from "semantic-ui-react";
+import { Modal, Button, Header, Image, Grid, Segment } from "semantic-ui-react";
 
 
 const Card = ({pokemon, loading}) => {
@@ -50,7 +50,7 @@ const Card = ({pokemon, loading}) => {
         </Modal>
 
         {/* List of Pokemon */}
-        <div class="ui icon input">
+        <div className="ui icon input" style={{width: '30%', marginRight:'0', marginLeft:'0', margin:'auto', display:'block', marginBottom:'20px'}}>
             <input type="text" 
                     placeholder="Search..." 
                     onChange={event => {setSearchPoke(event.target.value)}}
@@ -58,7 +58,7 @@ const Card = ({pokemon, loading}) => {
             <i class="circular search link icon"></i>
         </div>
 
-        <Grid columns={3} divided>
+        <Grid columns={3} style={{padding:'20px'}}>
         <Grid.Row>
             {
                 loading ? <Header as='h1'>Loading...</Header> :
@@ -72,9 +72,11 @@ const Card = ({pokemon, loading}) => {
                 }).map((item) => {
                     return (
                         
-                        <Grid.Column key={item.id} onClick={()=> openPokeInfo(item)}>
-                            <Image src={item.sprites.front_default} size={'small'}/>
-                            <Header as='h5'>{item.name}</Header>
+                        <Grid.Column key={item.id}>
+                            <Segment style={{width:'50%', marginBottom:'20px'}} onClick={()=> openPokeInfo(item)}>
+                            <Image src={item.sprites.front_default} size={'small'} centered/>
+                            <Header as='h5' className="ui center aligned">{item.name}</Header>
+                            </Segment>
                         </Grid.Column>
                     )
                 })
