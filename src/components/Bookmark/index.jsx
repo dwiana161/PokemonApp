@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import Slider from "react-slick";
 
-const Bookmark = ({BookmarkType}) => {
+const Bookmark = ({BookmarkType, onClick}) => {
     const settings = {
         dots: false,
         infinite: true,
@@ -48,7 +48,7 @@ const Bookmark = ({BookmarkType}) => {
             {BookmarkType.map((value, key) => (
                 <Fragment key={key}>
                     <ViewBoxBookmark>
-                    <Image src={value.sprites.front_default} size={'small'} centered/>
+                    <Image src={value.sprites.front_default} size={'small'} centered onClick={onClick}/>
                         <Header as='h5' className="ui center aligned">
                             {value.name} 
                         </Header>

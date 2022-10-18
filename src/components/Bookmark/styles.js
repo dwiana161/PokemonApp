@@ -20,6 +20,5 @@ export const ViewBoxBookmark = styled.div`
   padding: 16px;
   border-radius: 10px;
   width: 154px;
-  margin-right: 8px;
   background-color: #b2b2b2;
 `;

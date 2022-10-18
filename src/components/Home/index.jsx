@@ -57,8 +57,8 @@ const Home = () => {
                 </Grid.Column>
             </Grid.Row>
 
-            <Grid.Row>
-                <Grid.Column>
+            <Grid>
+                <Grid.Column textAlign="center">
                 <Button 
                     content='Previous' 
                     icon='left arrow' 
@@ -79,7 +79,7 @@ const Home = () => {
                     }}
                 />
                 </Grid.Column>
-            </Grid.Row>
+            </Grid>
         </>
     )
 }

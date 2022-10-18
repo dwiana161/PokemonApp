@@ -96,15 +96,16 @@ const CardList = ({pokemon, loading}) => {
             <i class="circular search link icon"></i>
         </div>
 
-        <Grid centered columns={3} style={{marginLeft:'10%'}}>
+        <Grid centered columns={3}>
             <Grid.Row>
                 <Grid.Column>
             {
             bookmarks.length !== 0 &&(
             <>
-            <Header as='h1'>Your Favorite Pokemons</Header>
+            <Header as='h1' className="ui center aligned">Your Favorite Pokemons</Header>
                     <Bookmark
                         BookmarkType={bookmarks}
+                        // onClick={()=> openPokeInfo(bookmarks)}
                     />
             </>
                 )
