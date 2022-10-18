@@ -3,9 +3,25 @@ import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Header, Icon, Image } from "semantic-ui-react";
 import { SliderStyleBookmark, ViewBoxBookmark } from "./styles";
-import  {bookmark, getBookmarkItems, unBookmarkItem } from "../../actions/bookmark";
+import  {bookmark, unBookmarkItem } from "../../actions/bookmark";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import Slider from "react-slick";
 
 const Bookmark = ({BookmarkType}) => {
+    const settings = {
+        dots: false,
+        infinite: true,
+        autoplay: false,
+        arrows: false,
+        centerPadding: "90",
+        slidesPerRow: 1,
+        slidesToShow: 1,
+        centerMode: true,
+        slidesToScroll: 1,
+        adaptiveHeight: false,
+      };
+
     const bookmarks = useSelector((state) => state.bookmark.bookmarkItems);
     const dispatch = useDispatch();
 
@@ -27,7 +43,8 @@ const Bookmark = ({BookmarkType}) => {
     };
 
     return (
-        <SliderStyleBookmark>
+        // <SliderStyleBookmark>
+            <Slider {...settings}>
             {BookmarkType.map((value, key) => (
                 <Fragment key={key}>
                     <ViewBoxBookmark>
@@ -55,7 +72,8 @@ const Bookmark = ({BookmarkType}) => {
                 </Fragment>
             ))
             }
-        </SliderStyleBookmark>
+            </Slider>
+        // </SliderStyleBookmark>
     );
 }
 
