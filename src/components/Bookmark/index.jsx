@@ -3,14 +3,14 @@ import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Header, Icon, Image } from "semantic-ui-react";
 import { SliderStyleBookmark, ViewBoxBookmark } from "./styles";
-import  {bookmark, unBookmarkItem } from "../../actions/bookmark";
+import  {bookmark, getBookmarkItems, unBookmarkItem } from "../../actions/bookmark";
 
 const Bookmark = ({BookmarkType}) => {
     const bookmarks = useSelector((state) => state.bookmark.bookmarkItems);
     const dispatch = useDispatch();
 
     const isBookmark = item => {
-    if (bookmarks !== null) {
+    if (bookmarks.length !== 0) {
         // bookmarks = JSON.parse(bookmarks)
         return (
         bookmarks.findIndex(bookmark => bookmark.id=== item.id) > -1
@@ -32,8 +32,7 @@ const Bookmark = ({BookmarkType}) => {
                 <Fragment key={key}>
                     <ViewBoxBookmark>
                     <Image src={value.sprites.front_default} size={'small'} centered/>
-                        <Header as='h5'>
-                            Pokemon 
+                        <Header as='h5' className="ui center aligned">
                             {value.name} 
                         </Header>
 

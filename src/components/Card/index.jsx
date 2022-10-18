@@ -3,8 +3,9 @@ import { useState } from "react";
 import { Modal, Button, Header, Image, Grid, Segment } from "semantic-ui-react";
 import { Icon } from 'semantic-ui-react';
 import { useDispatch, useSelector } from "react-redux";
-import  {bookmark, unBookmarkItem } from "../../actions/bookmark";
+import  {bookmark, getBookmarkItems, unBookmarkItem } from "../../actions/bookmark";
 import Bookmark from "../Bookmark";
+import { useEffect } from "react";
 
 
 const Card = ({pokemon, loading}) => {
@@ -17,14 +18,15 @@ const Card = ({pokemon, loading}) => {
     const handleShow = () => setShowModal(true);
    
     const bookmarks = useSelector((state) => state.bookmark.bookmarkItems);
-    console.log(bookmarks.length);
+    console.log(bookmarks);
     const dispatch = useDispatch();
 
     const isBookmark = item => {
-    if (bookmarks === 0) {
+        if (bookmarks.length !== 0) {
+        console.log('isBookmark', bookmarks[0].id)
         // bookmarks = JSON.parse(bookmarks)
         return (
-        bookmarks.findIndex(bookmark => bookmark.id=== item.id) > -1
+        bookmarks.findIndex(bookmark => bookmark.id === item.id) > -1
         )
     }
     }
@@ -45,6 +47,11 @@ const Card = ({pokemon, loading}) => {
         handleShow();
 
     }
+
+    useEffect(() => {
+        dispatch(getBookmarkItems());
+        console.log('book', bookmarks);
+    }, []);
 
     return(
         <>
