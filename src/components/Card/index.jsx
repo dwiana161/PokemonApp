@@ -1,6 +1,10 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Modal, Button, Header, Image, Grid, Segment } from "semantic-ui-react";
+import { Icon } from 'semantic-ui-react';
+import { useDispatch, useSelector } from "react-redux";
+import  {bookmark, unBookmarkItem } from "../../actions/bookmark";
+import Bookmark from "../Bookmark";
 
 
 const Card = ({pokemon, loading}) => {
@@ -10,8 +14,28 @@ const Card = ({pokemon, loading}) => {
     const [pokeWeight, setPokeWeight] = useState('');
     const [pokeImg, setPokeImg] = useState();
     const [searchPoke, setSearchPoke] = useState('');
-    const handleClose = () => setShowModal(false);
     const handleShow = () => setShowModal(true);
+   
+    const bookmarks = useSelector((state) => state.bookmark.bookmarkItems);
+    console.log(bookmarks.length);
+    const dispatch = useDispatch();
+
+    const isBookmark = item => {
+    if (bookmarks === 0) {
+        // bookmarks = JSON.parse(bookmarks)
+        return (
+        bookmarks.findIndex(bookmark => bookmark.id=== item.id) > -1
+        )
+    }
+    }
+    
+    const bookmarkItem = item => {
+    dispatch(bookmark(item));
+    };
+
+    const unBookmark = item => {
+    dispatch(unBookmarkItem(item));
+    };
 
     const openPokeInfo = async(res) => {
         setPokeName(res.name);
@@ -58,6 +82,19 @@ const Card = ({pokemon, loading}) => {
             <i class="circular search link icon"></i>
         </div>
 
+            {
+            bookmarks.length !== 0 &&(
+            <>
+            <Header as='h1'>Your Favorite Pokemons</Header>
+                <Grid>
+                    <Bookmark
+                        BookmarkType={bookmarks}
+                    />
+                </Grid>
+            </>
+                )
+            }
+
         <Grid columns={3} style={{padding:'20px'}}>
         <Grid.Row>
             {
@@ -73,10 +110,22 @@ const Card = ({pokemon, loading}) => {
                     return (
                         
                         <Grid.Column key={item.id}>
+                              {isBookmark(item) ? (
+                                <Icon 
+                                    name="like" 
+                                    color='red'
+                                    onClick={() => unBookmark(item)}
+                                />
+                            ) :
+                                <Icon 
+                                    name="like" 
+                                    onClick={() => bookmarkItem(item)}
+                                />
+                            }
                             <Segment style={{width:'50%', marginBottom:'20px'}} onClick={()=> openPokeInfo(item)}>
                             <Image src={item.sprites.front_default} size={'small'} centered/>
                             <Header as='h5' className="ui center aligned">{item.name}</Header>
-                            </Segment>
+                            </Segment>    
                         </Grid.Column>
                     )
                 })

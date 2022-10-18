@@ -1,0 +1,4 @@
+// Bookmark
+export const BOOKMARK_ITEM = 'BOOKMARK_ITEM';
+export const UNBOOKMARK_ITEM = 'UNBOOKMARK_ITEM';
+export const GET_BOOKMARK_ITEMS = 'GET_BOOKMARK_ITEMS';
