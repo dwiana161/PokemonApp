@@ -102,7 +102,7 @@ const CardList = ({pokemon, loading}) => {
             {
             favorites.length !== 0 &&(
             <>
-                <Header as='h1' className="ui center aligned">Your Favorite Pokemons</Header>
+                <Header as='h1' className="ui center aligned">Your Favorite Pokemons has {favorites.length}</Header>
                 <Favorite FavoriteType={favorites}/>
             </>
                 )
