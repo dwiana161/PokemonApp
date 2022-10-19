@@ -36,5 +36,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 * Search Bar
 ![Capture3](https://user-images.githubusercontent.com/55675935/196619584-49c16f6f-d9ab-43ed-a712-cde89696ba0a.PNG)
 
+* Detail Information
+![Capture5](https://user-images.githubusercontent.com/55675935/196623702-f8a29e19-d798-4ce5-9488-63e2f87fcab2.PNG)
+
 
 
