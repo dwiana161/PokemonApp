@@ -15,9 +15,9 @@ const Home = () => {
 
 
     const pokeFunc = async() => {
-        const res = await axios.get(url);
+        const res = await axios.get(url);       // call api url
 
-        getPokemonData(res.data.results);
+        getPokemonData(res.data.results);       // call method getPokemonData to get detailed pokemon data
         setLoading(false);
         setNextUrl(res.data.next);
         setPrevUrl(res.data.previous)
@@ -35,7 +35,7 @@ const Home = () => {
 
     const getPokemonData = async(res) => {
         res.map(async(item) => {
-            const result = await axios.get(item.url);
+            const result = await axios.get(item.url);       //get pokemon data
 
             setPokeData(state => {
                 state = [...state, result.data]
@@ -50,13 +50,18 @@ const Home = () => {
 
     return(
         <>
+
+        {/* HEADER */}
             <HomeHeader/>
+
+        {/* POKEMON LIST */}
             <Grid.Row>
                 <Grid.Column>
                     <CardList pokemon={pokeData} loading={loading}></CardList>
                 </Grid.Column>
             </Grid.Row>
 
+        {/* BUTTON NEXT & PREVIOUS */}
             <Grid>
                 <Grid.Column textAlign="center">
                 <Button 
@@ -74,7 +79,7 @@ const Home = () => {
                     icon='right arrow' 
                     labelPosition='right' 
                     onClick={() => {
-                        setPokeData([])
+                        setPokeData([])         // new page showing different pokemon
                         setUrl(nextUrl);
                     }}
                 />

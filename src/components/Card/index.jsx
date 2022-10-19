@@ -26,7 +26,6 @@ const CardList = ({pokemon, loading}) => {
 
     const isFavorite = item => {
         if (favorites.length !== 0) {
-        console.log('isFavorite', favorites[0].id)
         return (
         favorites.findIndex(favorite => favorite.id === item.id) > -1
         )
@@ -34,14 +33,14 @@ const CardList = ({pokemon, loading}) => {
     }
     
     const addFavorite = item => {
-    dispatch(favoritePoke(item));
+        dispatch(favoritePoke(item));
     };
 
     const removeFavorite = item => {
-    dispatch(unFavoritePoke(item));
+        dispatch(unFavoritePoke(item));
     };
 
-    const openPokeInfo = async(res) => {
+    const openPokeInfo = async(res) => {        //detail info pokemon
         setPokeName(res.name);
         setPokeHeight(res.height);
         setPokeWeight(res.weight);
@@ -69,19 +68,19 @@ const CardList = ({pokemon, loading}) => {
             <Modal.Content image>
                 <Image size='medium' src={pokeImg} />
                 <Modal.Description>
-                <Header>{pokeName}</Header>
-                <p>
-                Height : {pokeHeight}
-                </p>
-                <p>Weight : {pokeWeight}</p>
-                <p>Type : {pokeType}</p>
-                <p>Move : {pokeMove}</p>
-                <p>Game Indice : {gameIndices}</p>
+                    <Header>{pokeName}</Header>
+                    <p>
+                    Height : {pokeHeight}
+                    </p>
+                    <p>Weight : {pokeWeight}</p>
+                    <p>Type : {pokeType}</p>
+                    <p>Move : {pokeMove}</p>
+                    <p>Game Indice : {gameIndices}</p>
                 </Modal.Description>
             </Modal.Content>
             <Modal.Actions>
                 <Button color='black' onClick={() => setShowModal(false)}>
-                Close
+                    Close
                 </Button>
             </Modal.Actions>
         </Modal>
@@ -133,7 +132,7 @@ const CardList = ({pokemon, loading}) => {
                                 src={item.sprites.front_default} 
                                 size={'small'} 
                                 centered  
-                                onClick={()=> openPokeInfo(item)}
+                                onClick={()=> openPokeInfo(item)}       //open detail info
                                 style={{cursor:'pointer'}}/>
                             <Card.Content className="ui center aligned" style={{backgroundColor:' #ada397'}}>
                                 <Card.Header>{item.name}</Card.Header>
@@ -145,7 +144,7 @@ const CardList = ({pokemon, loading}) => {
                                 </Card.Description>
                             </Card.Content>
                                 <Card.Content extra>
-                                    {isFavorite(item) ? (
+                                    {isFavorite(item) ? (       //addfavorite & removefavorite pokemon
                                     <Icon 
                                         name="like" 
                                         color='red'

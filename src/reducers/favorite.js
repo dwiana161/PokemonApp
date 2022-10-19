@@ -20,8 +20,6 @@ const favorite = ( state = initialState, action) => {
                 )
             };
         case GET_FAVORITE_ITEMS:
-            // bookmarks["favoriteItems"] = action.payload
-            // return bookmarks;
             return {
                 ...state,
                 favoriteItems: payload
