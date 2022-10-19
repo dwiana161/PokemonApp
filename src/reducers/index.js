@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import bookmark from './bookmark';
+import favorite from './favorite';
 
 export const reducers = combineReducers({
-    bookmark,
+    favorite,
 });

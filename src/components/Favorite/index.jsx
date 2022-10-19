@@ -2,13 +2,13 @@ import React from "react";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Header, Icon, Image } from "semantic-ui-react";
-import { ViewBoxBookmark } from "./styles";
-import  {bookmark, unBookmarkItem } from "../../actions/bookmark";
+import { ViewBoxFavorite } from "./styles";
+import  {favoritePoke, unFavoritePoke } from "../../actions/favorite";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import Slider from "react-slick";
 
-const Bookmark = ({BookmarkType}) => {
+const Favorite = ({FavoriteType}) => {
     const settings = {
         dots: false,
         infinite: true,
@@ -22,31 +22,31 @@ const Bookmark = ({BookmarkType}) => {
         adaptiveHeight: false,
       };
 
-    const bookmarks = useSelector((state) => state.bookmark.bookmarkItems);
+    const favorites = useSelector((state) => state.favorite.favoriteItems);
     const dispatch = useDispatch();
 
-    const isBookmark = item => {
-    if (bookmarks.length !== 0) {
-        // bookmarks = JSON.parse(bookmarks)
+    const isFavorite = item => {
+    if (favorites.length !== 0) {
+        // favorites = JSON.parse(favorites)
         return (
-        bookmarks.findIndex(bookmark => bookmark.id=== item.id) > -1
+        favorites.findIndex(fav => fav.id=== item.id) > -1
         )
     }
     }
     
-    const bookmarkItem = item => {
-    dispatch(bookmark(item));
+    const addFavorite = item => {
+    dispatch(favoritePoke(item));
     };
 
-    const unBookmark = item => {
-    dispatch(unBookmarkItem(item));
+    const removeFavorite = item => {
+    dispatch(unFavoritePoke(item));
     };
 
     return (
             <Slider {...settings}>
-            {BookmarkType.map((value, key) => (
+            {FavoriteType.map((value, key) => (
                 <Fragment key={key}>
-                    <ViewBoxBookmark>
+                    <ViewBoxFavorite>
                     <Image src={value.sprites.front_default} size={'small'} centered/>
                         <Header as='h5' className="ui center aligned">
                             {value.name} 
@@ -56,19 +56,19 @@ const Bookmark = ({BookmarkType}) => {
                            Type : {value.types[0].type.name}
                         </p>
                         <p>Move : {value.moves[0].move.name}</p>
-                        {isBookmark(value) ? (
+                        {isFavorite(value) ? (
                                 <Icon 
                                     name="like" 
                                     color='red'
-                                    onClick={() => unBookmark(value)}
+                                    onClick={() => removeFavorite(value)}
                                 />
                             ) :
                                 <Icon 
                                     name="like" 
-                                    onClick={() => bookmarkItem(value)}
+                                    onClick={() => addFavorite(value)}
                                 />
                             }
-                    </ViewBoxBookmark>
+                    </ViewBoxFavorite>
                 </Fragment>
             ))
             }
@@ -76,4 +76,4 @@ const Bookmark = ({BookmarkType}) => {
     );
 }
 
-export default Bookmark;
+export default Favorite;

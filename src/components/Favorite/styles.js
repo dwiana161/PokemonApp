@@ -15,7 +15,7 @@ export const SliderStyleBookmark = styled.div`
   }
 `;
 
-export const ViewBoxBookmark = styled.div`
+export const ViewBoxFavorite = styled.div`
   border: 1px solid #d3d3d3;
   padding: 16px;
   border-radius: 10px;

@@ -3,8 +3,8 @@ import { useState } from "react";
 import { Modal, Button, Header, Image, Grid, Card } from "semantic-ui-react";
 import { Icon } from 'semantic-ui-react';
 import { useDispatch, useSelector } from "react-redux";
-import  {bookmark, getBookmarkItems, unBookmarkItem } from "../../actions/bookmark";
-import Bookmark from "../Bookmark";
+import  {favoritePoke, getFavoriteItems, unFavoritePoke } from "../../actions/favorite";
+import Favorite from "../Favorite";
 import { useEffect } from "react";
 
 
@@ -20,26 +20,25 @@ const CardList = ({pokemon, loading}) => {
     const [gameIndices, setGameIndices] = useState('');
     const handleShow = () => setShowModal(true);
    
-    const bookmarks = useSelector((state) => state.bookmark.bookmarkItems);
-    console.log(bookmarks);
+    const favorites = useSelector((state) => state.favorite.favoriteItems);
+    console.log(favorites);
     const dispatch = useDispatch();
 
-    const isBookmark = item => {
-        if (bookmarks.length !== 0) {
-        console.log('isBookmark', bookmarks[0].id)
-        // bookmarks = JSON.parse(bookmarks)
+    const isFavorite = item => {
+        if (favorites.length !== 0) {
+        console.log('isFavorite', favorites[0].id)
         return (
-        bookmarks.findIndex(bookmark => bookmark.id === item.id) > -1
+        favorites.findIndex(favorite => favorite.id === item.id) > -1
         )
     }
     }
     
-    const bookmarkItem = item => {
-    dispatch(bookmark(item));
+    const addFavorite = item => {
+    dispatch(favoritePoke(item));
     };
 
-    const unBookmark = item => {
-    dispatch(unBookmarkItem(item));
+    const removeFavorite = item => {
+    dispatch(unFavoritePoke(item));
     };
 
     const openPokeInfo = async(res) => {
@@ -55,8 +54,7 @@ const CardList = ({pokemon, loading}) => {
     }
 
     useEffect(() => {
-        dispatch(getBookmarkItems());
-        // console.log('book', bookmarks);
+        dispatch(getFavoriteItems());
     }, []);
 
     return(
@@ -66,30 +64,29 @@ const CardList = ({pokemon, loading}) => {
             onClose={() => setShowModal(false)}
             onOpen={() => setShowModal(true)}
             open={showModal}
-           
         >
             <Modal.Header>Pokemon</Modal.Header>
-      <Modal.Content image>
-        <Image size='medium' src={pokeImg} />
-        <Modal.Description>
-          <Header>{pokeName}</Header>
-          <p>
-           Height : {pokeHeight}
-          </p>
-          <p>Weight : {pokeWeight}</p>
-          <p>Type : {pokeType}</p>
-          <p>Move : {pokeMove}</p>
-          <p>Game Indice : {gameIndices}</p>
-        </Modal.Description>
-      </Modal.Content>
-      <Modal.Actions>
-        <Button color='black' onClick={() => setShowModal(false)}>
-          Close
-        </Button>
-      </Modal.Actions>
+            <Modal.Content image>
+                <Image size='medium' src={pokeImg} />
+                <Modal.Description>
+                <Header>{pokeName}</Header>
+                <p>
+                Height : {pokeHeight}
+                </p>
+                <p>Weight : {pokeWeight}</p>
+                <p>Type : {pokeType}</p>
+                <p>Move : {pokeMove}</p>
+                <p>Game Indice : {gameIndices}</p>
+                </Modal.Description>
+            </Modal.Content>
+            <Modal.Actions>
+                <Button color='black' onClick={() => setShowModal(false)}>
+                Close
+                </Button>
+            </Modal.Actions>
         </Modal>
 
-        {/* List of Pokemon */}
+        {/* Search Bar Pokemon */}
         <div className="ui icon input" style={{width: '30%', marginRight:'0', marginLeft:'0', margin:'auto', display:'block', marginBottom:'20px'}}>
             <input type="text" 
                     placeholder="Search..." 
@@ -99,28 +96,28 @@ const CardList = ({pokemon, loading}) => {
             <i class="circular search link icon"></i>
         </div>
 
+        {/* Favorite Pokemon List */}
         <Grid centered columns={3}>
             <Grid.Row>
                 <Grid.Column>
             {
-            bookmarks.length !== 0 &&(
+            favorites.length !== 0 &&(
             <>
-            <Header as='h1' className="ui center aligned">Your Favorite Pokemons</Header>
-                    <Bookmark
-                        BookmarkType={bookmarks}
-                    />
+                <Header as='h1' className="ui center aligned">Your Favorite Pokemons</Header>
+                <Favorite FavoriteType={favorites}/>
             </>
                 )
             }
-            </Grid.Column>
+                </Grid.Column>
             </Grid.Row>
         </Grid>
 
+        {/* List of Pokemon */}
         <Grid centered columns={3} style={{marginLeft:'10%'}}>
         <Grid.Row>
             {
                 loading ? <Header as='h1'>Loading...</Header> :
-                pokemon.filter((item) => {
+                pokemon.filter((item) => {              //filter by searchPoke results
                     if (searchPoke === "") {
                         return item
                     } else if (
@@ -141,25 +138,25 @@ const CardList = ({pokemon, loading}) => {
                             <Card.Content className="ui center aligned" style={{backgroundColor:' #ada397'}}>
                                 <Card.Header>{item.name}</Card.Header>
                                 <Card.Description>
-                                Type: {item.types[0].type.name}
+                                    Type: {item.types[0].type.name}
                                 </Card.Description>
                                 <Card.Description>
-                                Move: {item.moves[0].move.name}
+                                    Move: {item.moves[0].move.name}
                                 </Card.Description>
                             </Card.Content>
                                 <Card.Content extra>
-                                {isBookmark(item) ? (
-                                <Icon 
-                                    name="like" 
-                                    color='red'
-                                    onClick={() => unBookmark(item)}
-                                />
-                                ) :
+                                    {isFavorite(item) ? (
                                     <Icon 
                                         name="like" 
-                                        onClick={() => bookmarkItem(item)}
+                                        color='red'
+                                        onClick={() => removeFavorite(item)}
                                     />
-                                }
+                                    ) :
+                                        <Icon 
+                                            name="like" 
+                                            onClick={() => addFavorite(item)}
+                                        />
+                                    }
                                 </Card.Content>
                             </Card>    
                         </Grid.Column>
