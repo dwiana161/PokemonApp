@@ -17,6 +17,7 @@ const CardList = ({pokemon, loading}) => {
     const [pokeType, setPokeType] = useState('');
     const [pokeMove, setPokeMove] = useState('');
     const [searchPoke, setSearchPoke] = useState('');
+    const [gameIndices, setGameIndices] = useState('');
     const handleShow = () => setShowModal(true);
    
     const bookmarks = useSelector((state) => state.bookmark.bookmarkItems);
@@ -48,13 +49,14 @@ const CardList = ({pokemon, loading}) => {
         setPokeImg(res.sprites.front_default);
         setPokeType(res.types[0].type.name);
         setPokeMove(res.moves[0].move.name);
+        setGameIndices(res.game_indices[0].version.name);
         handleShow();
 
     }
 
     useEffect(() => {
         dispatch(getBookmarkItems());
-        console.log('book', bookmarks);
+        // console.log('book', bookmarks);
     }, []);
 
     return(
@@ -77,6 +79,7 @@ const CardList = ({pokemon, loading}) => {
           <p>Weight : {pokeWeight}</p>
           <p>Type : {pokeType}</p>
           <p>Move : {pokeMove}</p>
+          <p>Game Indice : {gameIndices}</p>
         </Modal.Description>
       </Modal.Content>
       <Modal.Actions>
@@ -105,7 +108,6 @@ const CardList = ({pokemon, loading}) => {
             <Header as='h1' className="ui center aligned">Your Favorite Pokemons</Header>
                     <Bookmark
                         BookmarkType={bookmarks}
-                        // onClick={()=> openPokeInfo(bookmarks)}
                     />
             </>
                 )

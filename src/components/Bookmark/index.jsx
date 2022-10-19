@@ -2,13 +2,13 @@ import React from "react";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Header, Icon, Image } from "semantic-ui-react";
-import { SliderStyleBookmark, ViewBoxBookmark } from "./styles";
+import { ViewBoxBookmark } from "./styles";
 import  {bookmark, unBookmarkItem } from "../../actions/bookmark";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import Slider from "react-slick";
 
-const Bookmark = ({BookmarkType, onClick}) => {
+const Bookmark = ({BookmarkType}) => {
     const settings = {
         dots: false,
         infinite: true,
@@ -43,12 +43,11 @@ const Bookmark = ({BookmarkType, onClick}) => {
     };
 
     return (
-        // <SliderStyleBookmark>
             <Slider {...settings}>
             {BookmarkType.map((value, key) => (
                 <Fragment key={key}>
                     <ViewBoxBookmark>
-                    <Image src={value.sprites.front_default} size={'small'} centered onClick={onClick}/>
+                    <Image src={value.sprites.front_default} size={'small'} centered/>
                         <Header as='h5' className="ui center aligned">
                             {value.name} 
                         </Header>
@@ -56,6 +55,7 @@ const Bookmark = ({BookmarkType, onClick}) => {
                         <p>
                            Type : {value.types[0].type.name}
                         </p>
+                        <p>Move : {value.moves[0].move.name}</p>
                         {isBookmark(value) ? (
                                 <Icon 
                                     name="like" 
@@ -73,7 +73,6 @@ const Bookmark = ({BookmarkType, onClick}) => {
             ))
             }
             </Slider>
-        // </SliderStyleBookmark>
     );
 }
 
