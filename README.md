@@ -10,7 +10,7 @@ The project was developed using :
 * Axios
 * JSX
 * Semantic UI
-* react-slick
+* React-slick
 
 How to run:
  * Clone Repository
@@ -25,7 +25,7 @@ Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view locally it in your browser.
 
 ## Deployment
-The app has deployed on Heroku
+The app has deployed on Heroku.\
 [Link](https://pokemonreact-app.herokuapp.com/) to visit the app.
 
 ## Overview
