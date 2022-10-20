@@ -48,7 +48,7 @@ const Favorite = ({FavoriteType}) => {
                 <Fragment key={key}>
                     <ViewBoxFavorite>
                     <Image src={value.sprites.front_default} size={'small'} centered/>
-                        <Header as='h5' className="ui center aligned">
+                        <Header as='h3' className="ui center aligned">
                             {value.name} 
                         </Header>
 
